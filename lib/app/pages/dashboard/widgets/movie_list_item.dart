@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:moviechallenge/app/models/movie_model.dart';
 
 class MovieListItem extends StatelessWidget {
   final int index;
+  final MovieModel movieModel;
   const MovieListItem({
     super.key,
     required this.index,
+    required this.movieModel,
   });
 
   @override
@@ -21,10 +24,10 @@ class MovieListItem extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(18),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Expanded(
                     flex: 2,
                     child: Column(
@@ -33,24 +36,27 @@ class MovieListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 8.0, right: 16),
+                            padding: const EdgeInsets.only(top: 8.0, right: 16),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'Snow Society of Neverland',
-                                    style: TextStyle(
+                                    movieModel.title ?? '',
+                                    style: const TextStyle(
                                       color: Color(0xff272426),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                     ),
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 2,
                                   ),
                                 ),
                                 Text(
-                                  '8.0',
-                                  style: TextStyle(
+                                  movieModel.voteAverage?.toStringAsFixed(1) ??
+                                      '0,0',
+                                  style: const TextStyle(
                                     color: Color(0xffd7aa3e),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
@@ -61,54 +67,20 @@ class MovieListItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Column(
+                          flex: 2,
+                          child: Row(
                             children: [
                               Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Director:',
-                                      style: TextStyle(
-                                        color: Color(0xffbac6c3),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Jon Doe',
-                                      style: TextStyle(
-                                        color: Color(0xffbac6c3),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  movieModel.overview ?? '',
+                                  style: const TextStyle(
+                                    color: Color(0xffbac6c3),
+                                    fontSize: 16,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
                                 ),
                               ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Starring:',
-                                      style: TextStyle(
-                                        color: Color(0xffbac6c3),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Jon Doe',
-                                      style: TextStyle(
-                                        color: Color(0xffbac6c3),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
                             ],
                           ),
                         ),
@@ -126,10 +98,9 @@ class MovieListItem extends StatelessWidget {
               height: 150,
               width: 110,
               decoration: BoxDecoration(
-                  color: Colors.blue,
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     image: NetworkImage(
-                        'https://image.tmdb.org/t/p/original/2e853FDVSIso600RqAMunPxiZjq.jpg'),
+                        "https://image.tmdb.org/t/p/original/${movieModel.posterPath}"),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(18)),

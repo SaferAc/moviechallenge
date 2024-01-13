@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:moviechallenge/app/models/movie_model.dart';
 
 class MovieGridItem extends StatelessWidget {
   final int index;
-  const MovieGridItem({super.key, required this.index});
+  final MovieModel movieModel;
+  const MovieGridItem({
+    super.key,
+    required this.index,
+    required this.movieModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,35 +25,37 @@ class MovieGridItem extends StatelessWidget {
             child: Container(
               height: 220,
               decoration: BoxDecoration(
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     image: NetworkImage(
-                        'https://image.tmdb.org/t/p/original/2e853FDVSIso600RqAMunPxiZjq.jpg'),
+                        'https://image.tmdb.org/t/p/original/${movieModel.posterPath}'),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(18)),
             ),
           ),
-          const Row(
+          Row(
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Snow Society of Neverland',
-                    style: TextStyle(
+                    movieModel.title ?? '',
+                    style: const TextStyle(
                       color: Color(0xff272426),
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: Text(
-                  '8.0',
-                  style: TextStyle(
+                  movieModel.voteAverage?.toStringAsFixed(1) ?? '0',
+                  style: const TextStyle(
                     color: Color(0xffd7aa3e),
                     fontWeight: FontWeight.bold,
                     fontSize: 22,

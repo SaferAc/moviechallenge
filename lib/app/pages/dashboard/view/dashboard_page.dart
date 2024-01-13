@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moviechallenge/app/dashboard/controller/dashboard_controller.dart';
-
-import '../widgets/movie_grid_item.dart';
-import '../widgets/movie_list_item.dart';
+import 'package:moviechallenge/app/pages/dashboard/controller/dashboard_controller.dart';
+import 'package:moviechallenge/app/pages/dashboard/widgets/movie_grid_item.dart';
+import 'package:moviechallenge/app/pages/dashboard/widgets/movie_list_item.dart';
 
 class DashBoardPage extends StatelessWidget {
   const DashBoardPage({super.key});
@@ -11,6 +10,7 @@ class DashBoardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashBoardController>(
+      autoRemove: false,
       builder: (DashBoardController controller) => Scaffold(
         backgroundColor: const Color(0xfff3f4f5),
         appBar: AppBar(
@@ -53,6 +53,7 @@ class DashBoardPage extends StatelessWidget {
                       (context, index) {
                         return MovieListItem(
                           index: index,
+                          movieModel: controller.movieList[index],
                         );
                       },
                       childCount: 10,
@@ -63,6 +64,7 @@ class DashBoardPage extends StatelessWidget {
                       (context, index) {
                         return MovieGridItem(
                           index: index,
+                          movieModel: controller.movieList[index],
                         );
                       },
                       childCount: 10,
@@ -126,26 +128,5 @@ class TransactionTab extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CustomRectTween extends MaterialRectCenterArcTween {
-  CustomRectTween({required this.a, required this.b}) : super(begin: a, end: b);
-  final Rect a, b;
-
-  @override
-  Rect lerp(double t) {
-    final double myCurve = Curves.easeOutCirc.transform(t);
-
-    return Rect.fromLTRB(
-      lerpDouble(a.left, b.left, myCurve),
-      lerpDouble(a.top, b.top, myCurve),
-      lerpDouble(a.right, b.right, myCurve),
-      lerpDouble(a.bottom, b.bottom, myCurve),
-    );
-  }
-
-  double lerpDouble(num a, num b, double t) {
-    return a + (b - a) * t;
   }
 }

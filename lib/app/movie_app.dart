@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moviechallenge/app/dashboard/view/dashboard_page.dart';
+
+import 'pages/dashboard/view/dashboard_page.dart';
 
 class MovieApp extends StatelessWidget {
   const MovieApp({Key? key}) : super(key: key);
