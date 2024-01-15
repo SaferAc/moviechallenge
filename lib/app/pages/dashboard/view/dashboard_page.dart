@@ -25,13 +25,19 @@ class DashBoardPage extends StatelessWidget {
                       ? Icons.grid_view_sharp
                       : Icons.list_sharp),
                 ),
-                IconButton(
-                  onPressed: controller.onSortMovies,
-                  icon: const Icon(Icons.sort),
+                Visibility(
+                  visible: controller.currentTab != 2,
+                  child: IconButton(
+                    onPressed: controller.onSortMovies,
+                    icon: const Icon(Icons.sort),
+                  ),
                 ),
-                IconButton(
-                  onPressed: controller.sortMoviesByName,
-                  icon: const Icon(Icons.sort_by_alpha),
+                Visibility(
+                  visible: controller.currentTab != 2,
+                  child: IconButton(
+                    onPressed: controller.sortMoviesByName,
+                    icon: const Icon(Icons.sort_by_alpha),
+                  ),
                 ),
               ],
               bottom: TabBar(

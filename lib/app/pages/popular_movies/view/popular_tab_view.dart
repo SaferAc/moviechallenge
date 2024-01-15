@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moviechallenge/app/commons/widgets/movie_grid_item.dart';
+import 'package:moviechallenge/app/commons/widgets/movie_list_item.dart';
 import 'package:moviechallenge/app/models/movie_model.dart';
 import 'package:moviechallenge/app/pages/dashboard/controller/dashboard_controller.dart';
-import 'package:moviechallenge/app/pages/dashboard/widgets/movie_grid_item.dart';
-import 'package:moviechallenge/app/pages/dashboard/widgets/movie_list_item.dart';
 import 'package:moviechallenge/app/pages/popular_movies/controller/popular_controller.dart';
 
 class PopularTab extends StatelessWidget {

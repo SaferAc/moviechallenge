@@ -6,6 +6,8 @@ import 'package:moviechallenge/app/pages/dashboard/view/dashboard_page.dart';
 import 'package:moviechallenge/app/utils/contants.dart';
 
 class BookMarkController extends GetxController {
+  bool isSort = false;
+  bool isSortByDate = false;
   Box<MovieModel> box = Hive.box(Constants.bookMarkMoviesBox);
   bool isGridView = false;
   bool isLoading = false;

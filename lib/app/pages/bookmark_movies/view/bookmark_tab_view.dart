@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:moviechallenge/app/commons/widgets/movie_grid_item.dart';
+import 'package:moviechallenge/app/commons/widgets/movie_list_item.dart';
 import 'package:moviechallenge/app/models/movie_model.dart';
 import 'package:moviechallenge/app/pages/bookmark_movies/controller/bookmark_controller.dart';
-import 'package:moviechallenge/app/pages/dashboard/widgets/movie_grid_item.dart';
-import 'package:moviechallenge/app/pages/dashboard/widgets/movie_list_item.dart';
 
 class BookMarkTab extends StatelessWidget {
   const BookMarkTab({super.key});
