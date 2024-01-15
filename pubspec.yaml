@@ -31,6 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.6
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  http: ^1.1.0
+
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +45,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^1.1.2
+  build_runner: ^2.1.10
+  test: 1.24.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -58,6 +66,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/movie_genres.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

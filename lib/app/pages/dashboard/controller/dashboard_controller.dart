@@ -1,38 +1,51 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moviechallenge/app/models/movie_model.dart';
 import 'package:moviechallenge/app/pages/dashboard/view/dashboard_page.dart';
-import 'package:moviechallenge/app/services/movie_provider.dart';
+import 'package:moviechallenge/app/pages/now_playing_movies/controller/now_playing_controller.dart';
+import 'package:moviechallenge/app/pages/popular_movies/controller/popular_controller.dart';
 
-class DashBoardController extends GetxController {
-  bool isUncategorized = false;
+class DashBoardController extends GetxController
+    with GetTickerProviderStateMixin {
   bool isGridView = false;
-  List<MovieModel> movieList = [];
-  final movieProvider = Get.find<MovieProvider>();
-  int page = 1;
+  late TabController tabBarController;
+  int currentTab = 0;
 
   @override
   void onInit() {
-    getNowPlayingMovies(page: page);
+    tabBarController = TabController(length: 3, vsync: this);
     super.onInit();
-  }
-
-  void onClassifyTabChange() {
-    isUncategorized = !isUncategorized;
-    update();
   }
 
   void onChangeGridView() {
     isGridView = !isGridView;
-    Get.offAll(
-      () => const DashBoardPage(),
-      transition: Transition.fade,
-    );
+    update();
+    Get.offAll(() => const DashBoardPage());
   }
 
-  Future getNowPlayingMovies({required int page}) async {
-    final movies = await movieProvider.getNowPlayingMovies(page);
-    movieList.addAll(movies);
+  onTabChange(int current) {
+    currentTab = current;
     update();
-    print(movieList);
+  }
+
+  void onSortMovies() {
+    switch (currentTab) {
+      case 0:
+        final popularController = Get.put(PopularController());
+        popularController.sortMoviesByDate();
+      case 1:
+        final nowPlayingController = Get.put(NowPlayingController());
+        nowPlayingController.sortMoviesByDate();
+    }
+  }
+
+  void sortMoviesByName() {
+    switch (currentTab) {
+      case 0:
+        final popularController = Get.put(PopularController());
+        popularController.sortMoviesByName();
+      case 1:
+        final nowPlayingController = Get.put(NowPlayingController());
+        nowPlayingController.sortMoviesByName();
+    }
   }
 }

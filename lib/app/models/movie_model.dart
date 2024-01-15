@@ -1,18 +1,41 @@
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:moviechallenge/app/models/movie_genre_list.dart';
+import 'package:moviechallenge/app/utils/contants.dart';
+
+part 'movie_model.g.dart';
+
+@HiveType(typeId: 1)
 class MovieModel {
+  @HiveField(0)
   bool? adult;
+  @HiveField(1)
   String? backdropPath;
+  @HiveField(2)
   List<int>? genreIds;
+  @HiveField(3)
+  @HiveField(4)
   int? id;
+  @HiveField(5)
   String? originalLanguage;
+  @HiveField(6)
   String? originalTitle;
+  @HiveField(7)
   String? overview;
+  @HiveField(8)
   double? popularity;
+  @HiveField(9)
   String? posterPath;
+  @HiveField(10)
   DateTime? releaseDate;
+  @HiveField(11)
   String? title;
+  @HiveField(12)
   bool? video;
+  @HiveField(13)
   double? voteAverage;
+  @HiveField(14)
   int? voteCount;
+  List<String>? genreNames;
 
   MovieModel({
     this.adult,
@@ -29,7 +52,10 @@ class MovieModel {
     this.video,
     this.voteAverage,
     this.voteCount,
-  });
+    this.genreNames,
+  }) {
+    _loadGenreNames();
+  }
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
         adult: json["adult"],
@@ -42,7 +68,7 @@ class MovieModel {
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
-        posterPath: json["poster_path"],
+        posterPath: "${Constants.posterPathUrl}${json["poster_path"]}",
         releaseDate: json["release_date"] == null
             ? null
             : DateTime.parse(json["release_date"]),
@@ -70,4 +96,11 @@ class MovieModel {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  Future<void> _loadGenreNames() async {
+    await GenreList.init();
+    if (genreIds != null) {
+      genreNames = GenreList().getGenreNamesByIds(genreIds!);
+    }
+  }
 }

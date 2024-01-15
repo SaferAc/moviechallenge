@@ -1,37 +1,36 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:moviechallenge/app/models/movie_list_model.dart';
+import 'package:moviechallenge/app/models/movie_model.dart';
 import 'package:moviechallenge/app/utils/contants.dart';
 
-class MovieProvider extends GetConnect {
-  Future getPopularMovies(int page) async {
-    final resp = await get(
-      "${Constants.defaultUrl}${Constants.popularString}${Constants.pageString}$page",
-      headers: Constants.defaultHeaders,
-    );
-    return handleResult(resp);
+class MovieProvider {
+  String _buildUrl(String endpoint, int page) {
+    return "${Constants.defaultUrl}$endpoint${Constants.pageString}$page";
   }
 
-  Future getNowPlayingMovies(int page) async {
-    Response resp = await get(
-      "${Constants.defaultUrl}${Constants.nowPlayingString}${Constants.pageString}$page",
-      headers: Constants.defaultHeaders,
-    );
-    return handleResult(resp);
+  Future<List<MovieModel>> getPopularMovies(int page) async {
+    final url = _buildUrl(Constants.popularString, page);
+    final response =
+        await http.get(Uri.parse(url), headers: Constants.defaultHeaders);
+
+    return handleResult(response);
   }
 
-  Future handleResult(Response resp) async {
-    if (resp.statusCode == 200) {
-      final movieResponse = movieListFromJson(
-        jsonEncode(resp.body),
-      );
+  Future<List<MovieModel>> getNowPlayingMovies(int page) async {
+    final url = _buildUrl(Constants.nowPlayingString, page);
+    final response =
+        await http.get(Uri.parse(url), headers: Constants.defaultHeaders);
+
+    return handleResult(response);
+  }
+
+  List<MovieModel> handleResult(http.Response response) {
+    if (response.statusCode == 200) {
+      final movieResponse = movieListFromJson(response.body);
       final movieList = movieResponse.results;
-      return movieList;
+      return movieList ?? [];
     } else {
-      return Get.defaultDialog(
-          title: "Ups", content: const Text('Try Again Later'));
+      throw Exception(Constants.errorMessage);
     }
   }
 }
